@@ -43,6 +43,8 @@ typedef enum {
 
 @interface HHPanningTableViewCell : UITableViewCell
 
++ (void) closeDrawersInTable:(UITableView*) tableView;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier;
 
 - (void)cleanup;

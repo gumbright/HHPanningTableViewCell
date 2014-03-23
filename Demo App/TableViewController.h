@@ -30,7 +30,7 @@
 #import "HHPanningTableViewCell.h"
 
 
-@interface TableViewController : UITableViewController <HHPanningTableViewCellDelegate>
+@interface TableViewController : UIViewController <HHPanningTableViewCellDelegate>
 
 - (id)init;
 

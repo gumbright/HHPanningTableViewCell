@@ -34,7 +34,7 @@
 @interface TableViewController ()
 
 @property (nonatomic, retain) NSArray *rowTitles;
-
+@property (nonatomic, weak) IBOutlet UITableView* tableView;
 @end
 
 
@@ -173,4 +173,8 @@
     [alert show];
 }
 
+- (IBAction) closeDrawersPressed:(id)sender
+{
+    [HHPanningTableViewCell closeDrawersInTable:self.tableView];
+}
 @end

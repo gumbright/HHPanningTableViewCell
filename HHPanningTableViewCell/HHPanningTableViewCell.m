@@ -203,17 +203,33 @@ static NSString *const												kTranslationContext		= @"translation";
 	_drawerView = drawerView;
 }
 
++ (void) closeDrawersInTable:(UITableView*) tableView
+{
+    [self closeDrawersInTable:tableView exceptForCell:nil];
+}
+
++ (void) closeDrawersInTable:(UITableView*) tableView exceptForCell:(HHPanningTableViewCell*) cell
+{
+    for (UITableViewCell *currentCell in [tableView visibleCells]) {
+        if ((currentCell != cell) && [currentCell isKindOfClass:[HHPanningTableViewCell class]])
+        {
+            [(HHPanningTableViewCell *)currentCell setDrawerRevealed : NO animated : YES];
+        }
+    }
+    
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if (context == (__bridge void *)kDrawerRevealedContext) {
 		if (self.drawerRevealed) {
 			UITableView *tableView = [self superTableView];
-
-			for (UITableViewCell *cell in [tableView visibleCells]) {
-				if ((cell != self) && [cell isKindOfClass:[HHPanningTableViewCell class]]) {
-					[(HHPanningTableViewCell *)cell setDrawerRevealed : NO animated : YES];
-				}
-			}
+            [HHPanningTableViewCell closeDrawersInTable:tableView exceptForCell:self];
+//			for (UITableViewCell *cell in [tableView visibleCells]) {
+//				if ((cell != self) && [cell isKindOfClass:[HHPanningTableViewCell class]]) {
+//					[(HHPanningTableViewCell *)cell setDrawerRevealed : NO animated : YES];
+//				}
+//			}
 		}
 	}
 	else if (context == (__bridge void *)kTranslationContext) {
