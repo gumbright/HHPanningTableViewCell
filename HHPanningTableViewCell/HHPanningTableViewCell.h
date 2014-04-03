@@ -34,6 +34,7 @@
 @protocol HHPanningTableViewCellDelegate;
 
 typedef void (^HHDrawerRevealedCompletionBlock)(void);
+typedef void (^HHStateChangeCompletionBlock)(HHPanningTableViewCell* theCell);
 
 typedef enum {
 	HHPanningTableViewCellDirectionRight = UISwipeGestureRecognizerDirectionRight,
@@ -60,8 +61,8 @@ typedef enum {
 @property (nonatomic, assign)               BOOL                                shadowViewEnabled;
 @property (nonatomic, assign)               CGFloat                             showAnimationDuration;
 @property (nonatomic, assign)               CGFloat                             hideAnimationDuration;
-@property (nonatomic, copy) HHDrawerRevealedCompletionBlock drawerRevealCompletionBlock;
-@property (nonatomic, copy) HHDrawerRevealedCompletionBlock drawerHideCompletionBlock;
+@property (nonatomic, copy) HHStateChangeCompletionBlock drawerRevealCompletionBlock;
+@property (nonatomic, copy) HHStateChangeCompletionBlock drawerHideCompletionBlock;
 
 - (BOOL)isPanningInProgress;
 - (BOOL)isPanning;

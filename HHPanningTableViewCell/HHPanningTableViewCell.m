@@ -360,7 +360,7 @@ static NSString *const												kTranslationContext		= @"translation";
             }
             else if (self.drawerRevealCompletionBlock)
             {
-                self.drawerRevealCompletionBlock();
+                self.drawerRevealCompletionBlock(self);
             }
 		};
 
@@ -394,7 +394,7 @@ static NSString *const												kTranslationContext		= @"translation";
             }
             else if (drawerInitiallyRevealed && self.drawerHideCompletionBlock)
             {
-                self.drawerHideCompletionBlock();
+                self.drawerHideCompletionBlock(self);
             }
 		};
 
