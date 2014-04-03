@@ -35,6 +35,7 @@
 
 @property (nonatomic, retain) NSArray *rowTitles;
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
+@property (nonatomic, assign) NSInteger numRows;
 @end
 
 
@@ -49,6 +50,7 @@
 	
 	if (self != nil) {
 		self.rowTitles = [NSArray arrayWithObjects:@"Pan direction: None", @"Pan direction: Right", @"Pan direction: Left", @"Pan direction: Both", @"Custom trigger", nil];
+        self.numRows = [self.rowTitles count] * 50;
 	}
 	
 	return self;
@@ -92,7 +94,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.rowTitles count] * 50;
+    return self.numRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -175,6 +177,8 @@
 
 - (IBAction) closeDrawersPressed:(id)sender
 {
-    [HHPanningTableViewCell closeDrawersInTable:self.tableView];
+//    [HHPanningTableViewCell closeDrawersInTable:self.tableView];
+    self.numRows = (self.numRows) ? 0 : [self.rowTitles count] * 50;
+    [self.tableView reloadData];
 }
 @end

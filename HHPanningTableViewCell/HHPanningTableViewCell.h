@@ -60,6 +60,8 @@ typedef enum {
 @property (nonatomic, assign)               BOOL                                shadowViewEnabled;
 @property (nonatomic, assign)               CGFloat                             showAnimationDuration;
 @property (nonatomic, assign)               CGFloat                             hideAnimationDuration;
+@property (nonatomic, copy) HHDrawerRevealedCompletionBlock drawerRevealCompletionBlock;
+@property (nonatomic, copy) HHDrawerRevealedCompletionBlock drawerHideCompletionBlock;
 
 - (BOOL)isPanningInProgress;
 - (BOOL)isPanning;

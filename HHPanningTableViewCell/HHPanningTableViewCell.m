@@ -322,6 +322,8 @@ static NSString *const												kTranslationContext		= @"translation";
 		return;
 	}
 
+//    HHDrawerRevealedCompletionBlock resolvedCompletionBlock = (completionBlock)?:self.defaultDrawerRevealCompletionBlock;
+    BOOL drawerInitiallyRevealed = self.drawerRevealed;
 	self.drawerRevealed = revealed;
 
 	UIView	*drawerView		= self.drawerView;
@@ -352,8 +354,13 @@ static NSString *const												kTranslationContext		= @"translation";
 		void	(^completion)(BOOL finished) = ^(BOOL finished) {
 			self.animationInProgress = NO;
             
-            if (completionBlock) {
+            if (completionBlock)
+            {
                 completionBlock();
+            }
+            else if (self.drawerRevealCompletionBlock)
+            {
+                self.drawerRevealCompletionBlock();
             }
 		};
 
@@ -381,8 +388,13 @@ static NSString *const												kTranslationContext		= @"translation";
             shadowView.hidden = YES;
 
 			self.animationInProgress = NO;
-            if (completionBlock) {
+            if (completionBlock)
+            {
                 completionBlock();
+            }
+            else if (drawerInitiallyRevealed && self.drawerHideCompletionBlock)
+            {
+                self.drawerHideCompletionBlock();
             }
 		};
 
@@ -596,7 +608,7 @@ static NSString *const												kTranslationContext		= @"translation";
 		}
 
 		if (isDelegateTrigger && (drawerRevealed != drawerWasRevealed)) {
-			[self setDrawerRevealed:NO direction:direction animated:YES];
+			//[self setDrawerRevealed:NO direction:direction animated:YES];
 
 			[delegate panningTableViewCell:self didTriggerWithDirection:panDirection];
 		}
