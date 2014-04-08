@@ -173,7 +173,7 @@ static NSString *const												kTranslationContext		= @"translation";
 - (void)cleanup {
 	self.delegate				= nil;
     
-	self.directionMask			= 0;
+//	self.directionMask			= 0;
 	self.shouldBounce			= YES;
     
 	[self.drawerView removeFromSuperview];
@@ -540,25 +540,34 @@ static NSString *const												kTranslationContext		= @"translation";
 		}
 
 		NSInteger	directionMask	= self.directionMask;
+        NSLog(@"dir mask = %d",(int) directionMask);
 
-		if (directionMask & HHPanningTableViewCellDirectionLeft) {
-			if ((pan + maximumPan) < 0.0f) {
+		if (directionMask & HHPanningTableViewCellDirectionLeft)
+        {
+			if ((pan + maximumPan) < 0.0f)
+            {
+                NSLog(@"pan 1");
 				pan = -maximumPan;
 			}
 		}
-		else {
+		else
+        {
+            NSLog(@"pan 2");
 			pan = MAX(pan, 0.0f);
 		}
 
 		if (directionMask & HHPanningTableViewCellDirectionRight) {
+            NSLog(@"pan 3");
 			if (pan > maximumPan) {
 				pan = maximumPan;
 			}
 		}
 		else {
+            NSLog(@"pan 4");
 			pan = MIN(pan, 0.0f);
 		}
 
+        NSLog(@"pan = %f totalpan = %f  translation=%f tiv.x=%f maxPan = %f",pan, totalPan, translation, translationInView.x, maximumPan);
 		self.translation = pan;
 	}
 	else if ((state == UIGestureRecognizerStateEnded) || (state == UIGestureRecognizerStateCancelled)) {
