@@ -31,16 +31,24 @@
 #import "HHPanningTableViewCell.h"
 
 
-@interface TableViewController ()
+@interface TableViewController () {
+    NSUInteger _numberOfItems;
+}
 
 @property (nonatomic, retain) NSArray *rowTitles;
+//<<<<<<< HEAD
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
-@property (nonatomic, assign) NSInteger numRows;
+//@property (nonatomic, assign) NSInteger numRows;
+//=======
+@property (nonatomic, assign) NSUInteger numberOfItems;
+
+//>>>>>>> upstream/master
 @end
 
 
 @implementation TableViewController
 
+@synthesize numberOfItems = _numberOfItems;
 #pragma mark -
 #pragma mark Initialization
 
@@ -50,7 +58,18 @@
 	
 	if (self != nil) {
 		self.rowTitles = [NSArray arrayWithObjects:@"Pan direction: None", @"Pan direction: Right", @"Pan direction: Left", @"Pan direction: Both", @"Custom trigger", nil];
-        self.numRows = [self.rowTitles count] * 50;
+//<<<<<<< HEAD
+//        self.numRows = [self.rowTitles count] * 50;
+//=======
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        [refreshControl addTarget:self
+                           action:@selector(dropViewDidBeginRefreshing:)
+                 forControlEvents:UIControlEventValueChanged];
+
+//        self.refreshControl = refreshControl;
+        
+        self.numberOfItems = 250;
+//>>>>>>> upstream/master
 	}
 	
 	return self;
@@ -94,7 +113,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.numRows;
+//<<<<<<< HEAD
+//    return self.numRows;
+//=======
+    return self.numberOfItems;
+//>>>>>>> upstream/master
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -175,10 +198,28 @@
     [alert show];
 }
 
-- (IBAction) closeDrawersPressed:(id)sender
+//<<<<<<< HEAD
+//- (IBAction) closeDrawersPressed:(id)sender
+//{
+////    [HHPanningTableViewCell closeDrawersInTable:self.tableView];
+//    self.numRows = (self.numRows) ? 0 : [self.rowTitles count] * 50;
+//    [self.tableView reloadData];
+//}
+//=======
+#pragma mark - UIRefreshControl delegate
+-(void) dropViewDidBeginRefreshing:(id) sender
 {
-//    [HHPanningTableViewCell closeDrawersInTable:self.tableView];
-    self.numRows = (self.numRows) ? 0 : [self.rowTitles count] * 50;
-    [self.tableView reloadData];
+    //Add 10 cells
+    self.numberOfItems += 10;
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+    for (NSUInteger i=0; i<10; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        [indexPaths addObject:indexPath];
+    }
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.refreshControl endRefreshing];
 }
+
+
+//>>>>>>> upstream/master
 @end
