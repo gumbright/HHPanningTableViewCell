@@ -665,8 +665,8 @@ static NSString *const												kTranslationContext		= @"translation";
 	[shadowView setBounds:shadowBounds];
 	[shadowView setCenter:center];
 
-    drawerView.hidden = NO;
-    shadowView.hidden = NO;
+    drawerView.hidden = !self.drawerRevealed;
+    shadowView.hidden = drawerView.hidden;
 }
 
 - (void)installViews
